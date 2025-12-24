@@ -1,0 +1,9 @@
+{
+  "domain": "vn_iqair",
+  "name": "VN IQAir",
+  "icons": {
+    "default": {
+      "icon": "icon.svg"
+    }
+  }
+}

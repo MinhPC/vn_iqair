@@ -1,0 +1,10 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "VN IQAir",
+        "description": "Configure IQAir using City, State and Country"
+      }
+    }
+  }
+}
