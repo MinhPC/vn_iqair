@@ -58,6 +58,7 @@ class IQAirAQISensor(IQAirBaseSensor):
 class IQAirPM25Sensor(IQAirBaseSensor):
     _attr_native_unit_of_measurement = CONCENTRATION_MICROGRAMS_PER_CUBIC_METER
     _attr_icon = "mdi:blur"
+    _attr_state_class = "measurement"
 
     def __init__(self, coordinator, entry):
         super().__init__(
@@ -71,20 +72,27 @@ class IQAirPM25Sensor(IQAirBaseSensor):
     @property
     def native_value(self):
         pollution = self.coordinator.data.get("current", {}).get("pollution", {})
-        aqi = pollution.get("aqius")
 
+        # 1️⃣ Lấy AQI US
+        aqi = pollution.get("aqius")
         if aqi is None:
             return None
 
-        # Map AQI → PM2.5 gần đúng (EPA)
+        # 2️⃣ AQI → PM2.5 (EPA approx)
         if aqi <= 50:
-            return round(aqi * 0.25, 1)
+            pm25 = aqi * 0.25
         elif aqi <= 100:
-            return round((aqi - 50) * 0.5 + 12, 1)
+            pm25 = (aqi - 50) * 0.5 + 12
         elif aqi <= 150:
-            return round((aqi - 100) * 0.5 + 35, 1)
+            pm25 = (aqi - 100) * 0.5 + 35
         else:
-            return round((aqi - 150) * 1.0 + 55, 1)
+            pm25 = (aqi - 150) * 1.0 + 55
+
+        # 3️⃣ Trừ offset hiệu chỉnh
+        pm25 = pm25 - 3.2
+
+        # 4️⃣ Không cho âm + làm tròn
+        return round(max(pm25, 0), 1)
 
 
 class IQAirTemperatureSensor(IQAirBaseSensor):
