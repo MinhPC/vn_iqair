@@ -30,6 +30,7 @@ class IQAirCoordinator(DataUpdateCoordinator):
             _LOGGER,
             name=f"IQAir {self.city}",
             update_interval=timedelta(minutes=DEFAULT_SCAN_INTERVAL),
+            always_update=True,   # ✅ CỰC KỲ QUAN TRỌNG
         )
 
     async def _async_update_data(self):
