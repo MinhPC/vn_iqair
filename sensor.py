@@ -89,7 +89,7 @@ class IQAirPM25Sensor(IQAirBaseSensor):
             pm25 = (aqi - 150) * 1.0 + 55
 
         # 3️⃣ Trừ offset hiệu chỉnh
-        pm25 = pm25 - 3.2
+        pm25 = pm25 - 0.2
 
         # 4️⃣ Không cho âm + làm tròn
         return round(max(pm25, 0), 1)

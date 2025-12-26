@@ -5,5 +5,6 @@
   "config_flow": true,
   "iot_class": "cloud_polling",
   "documentation": "https://www.iqair.com",
-  "codeowners": ["Minh Phan"]
+  "codeowners": ["@MinhPhan"],
+  "icon": "mdi:air-filter"
 }
